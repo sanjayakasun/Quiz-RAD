@@ -10,6 +10,7 @@
 
 body{
     background-color: var(--black);
+    color: var(--white);
 }
 
 .h3, .display-1, .display-3{
