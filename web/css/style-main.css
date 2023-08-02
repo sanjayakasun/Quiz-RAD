@@ -1,5 +1,16 @@
+:root {
+    --blue: #0097e6;
+    --orange: #f39c12;
+    --red: #e74c3c;
+    --white: #fff;
+    --light-color: #aaa;
+    --black: #222;
+    --light-bg: #333;
+ }
+
 body{
-    background-color: #000;
+    background-color: var(--black);
+    color: var(--white);
 }
 
 .h3, .display-1, .display-3{
@@ -12,7 +23,6 @@ body{
     color: #fff;
     box-shadow: 5px 5px #888888;
     padding: 10px
-    
 }
 
 .cards:hover{
@@ -62,4 +72,28 @@ dd{
 
 dd, dt{
     padding: 10px;
+}
+
+footer {
+    line-height: 70px;
+    position: relative;
+    background: rgba(28, 32, 36, 1);
+    bottom: 0px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center; 
+}
+
+#subject-div{
+    color: var(--white);
+    align-items: center;
+}
+
+#subject_div table{
+    width: 100%;
+}
+
+#subject-div td{
+    padding: 15px;
 }
