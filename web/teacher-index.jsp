@@ -1,9 +1,34 @@
+<%@page import="classes.DBConnector" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.ResultSet" %>
+
+<%
+    String teacher_id = "";
+
+    Cookie[] cookies = request.getCookies();
+
+    for (int i = 0; i < cookies.length; i++) {
+        Cookie cookie = cookies[i];
+        if (cookie.getName().equals("teacher_id")) {
+            teacher_id = cookie.getValue();
+        }
+    }
+
+    Connection con = DBConnector.getConnection();
+    String query = "SELECT quiz.quiz_id, quiz.subject_id, quiz.quiz_title, quiz.is_public, quiz.code, subject.subject_category, "
+            + "subject.subject_level FROM quiz INNER JOIN subject ON quiz.subject_id = subject.subject_id WHERE teacher_id=?";
+    PreparedStatement pstmt = con.prepareStatement(query);
+    pstmt.setString(1, teacher_id);
+    ResultSet rs = pstmt.executeQuery();
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>Educator - Home</title>
         <link rel="icon" type="image/png" href="./assets/img/favicon.jpeg">
-        
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,219 +54,134 @@
                     </div>
 
                     <div class="d-flex ms-auto order-5">
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.html'">Logout</button>
+                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">Logout</button>
                     </div>
                 </div>
             </div>
         </nav>
 
-        </div>
-        <main>
-            <div class="container-md">
-                <div class="row ms-auto text-end">
+    </div>
+    <main>
+        <div class="container-md">
+            <div class="row ms-auto text-end">
+                <div class="col">
+                    <button type="button" class="btn btn-warning mt-5" onclick="showHideSubject()">Add New Subject</button>
+                </div>
+            </div>
+
+            <div id="subject-div" style="display: none;">
+                <fieldset class="form-group">
+                    <legend>Add New Subject</legend>
+                    <form method="POST" action="">
+                        <table>
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label for="subject">Subject</label>
+                                    </td>
+                                    <td>
+                                        <input list="subjects" name="subject" id="subject" placeholder="Subject" class="form-control"/>
+                                        <datalist id="subjects">
+                                            <option value="Sinhala"></option>
+                                            <option value="Tamil"></option>
+                                            <option value="Physics"></option>
+                                        </datalist>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="level">Level</label>
+                                    </td>
+                                    <td>
+                                        <input list="levels" name="level" id="level" placeholder="Level" class="form-control"/>
+                                        <datalist id="levels">
+                                            <option value="Grade 6"></option>
+                                            <option value="Grade 7"></option>
+                                            <option value="Grade 8"></option>
+                                        </datalist>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="submit" name="subject" class="btn btn-primary" value="Add Subject">
+                    </form>
+                </fieldset>
+            </div>
+
+            <%
+                String prev = "";
+                while (rs.next()) {
+                    String curr = rs.getString("subject_id");
+                    if (curr != prev) {
+            %>
+            
+            <div class="mt-5 mb-5">
+                <div class="row mb-4">
                     <div class="col">
-                        <button type="button" class="btn btn-warning mt-5" onclick="showHideSubject()">Add New Subject</button>
+                        <h3 class="h3"><% out.println(rs.getString("subject_category") + " - " + rs.getString("subject_level"));  %></h3>
+                    </div>
+                    <div class="col ms-auto text-end">
+                        <button class="btn btn-info" onclick="location.href = 'teacher-quiz.jsp?subject_id<% out.println(curr); %>'">Add New Quiz</button>
                     </div>
                 </div>
 
-                <div id="subject-div" style="display: none;">
-                    <fieldset class="form-group">
-                        <legend>Add New Subject</legend>
-                        <form method="POST" action="">
-                            <table>
-                                <thead></thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <label for="subject">Subject</label>
-                                        </td>
-                                        <td>
-                                            <input list="subjects" name="subject" id="subject" placeholder="Subject" class="form-control"/>
-                                            <datalist id="subjects">
-                                                <option value="Sinhala"></option>
-                                                <option value="Tamil"></option>
-                                                <option value="Physics"></option>
-                                            </datalist>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label for="level">Level</label>
-                                        </td>
-                                        <td>
-                                            <input list="levels" name="level" id="level" placeholder="Level" class="form-control"/>
-                                            <datalist id="levels">
-                                                <option value="Grade 6"></option>
-                                                <option value="Grade 7"></option>
-                                                <option value="Grade 8"></option>
-                                            </datalist>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <input type="submit" name="subject" class="btn btn-primary" value="Add Subject">
-                        </form>
-                    </fieldset>
-                </div>
-
-                <div class="mt-5">
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h3 class="h3">Grade 12 - Physics</h3>
-                        </div>
-                        <div class="col ms-auto text-end">
-                            <button class="btn btn-info" onclick="location.href = 'teacher-quiz.html'">Add New Quiz</button>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col">
-                            <div class="container mt-3 mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Light</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
-                                            <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Edit Quiz</button>
-                                        </div>  
+                <div class="row">
+                    <div class="col">
+                        <div class="container mt-3 mb-3">
+                            <div class="cards">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <h5 class="h5 mt-2"><% out.println(rs.getString("quiz_title")); %></h5>
                                     </div>
-                                </div>
-                            </div>
-                        
-                            <div class="container mt-3 mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Light</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
-                                            <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Edit Quiz</button>
-                                        </div>  
+                                    <div class="col text-center">
+                                        <p class="mt-2">
+                                            <%
+                                                if(!rs.getBoolean("is_public")){
+                                                    out.println("Private");
+                                                }
+                                                else{
+                                                    out.println("Public");
+                                                }
+                                            %>
+                                        </p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="container mt-3 mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Light</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
-                                            <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Edit Quiz</button>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-5 mb-5">
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h3 class="h3">Grade 11 - Science</h3>
-                        </div>
-                        <div class="col ms-auto text-end">
-                            <button class="btn btn-info" onclick="location.href = 'teacher-quiz.html'">Add New Quiz</button>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col">
-                            <div class="container mt-3 mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Light</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
-                                            <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Edit Quiz</button>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="container mt-3 mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Light</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
-                                            <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Edit Quiz</button>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="container mt-3 mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Light</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
-                                            <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Edit Quiz</button>
-                                        </div>  
-                                    </div>
+                                    <div class="col text-center">
+                                        <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
+                                        <button class="btn btn-primary mt-2">Show Leaderboard</button>
+                                        <button class="btn btn-primary mt-2">Edit Quiz</button>
+                                    </div>  
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-
-        <footer class="bg-light text-center" style="position: relative;">
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-                © 2023 All rights reserved:
-                <a class="text-dark" href="index.html">WeQuiz</a>
-            </div>
-        </footer>
-
-        <script>
-            function showHideSubject(){
-                let sub_div = document.getElementById("subject-div");
-                if(sub_div.style.display == "block"){
-                    sub_div.style.display = "none";
+            <%
+                        prev = curr;
+                    }
                 }
-                else{
-                    sub_div.style.display = "block";
-                }
+            %>         
+        </div>
+    </main>
+
+    <footer class="bg-light text-center" style="position: relative;">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2023 All rights reserved:
+            <a class="text-dark" href="index.html">WeQuiz</a>
+        </div>
+    </footer>
+
+    <script>
+        function showHideSubject() {
+            let sub_div = document.getElementById("subject-div");
+            if (sub_div.style.display == "block") {
+                sub_div.style.display = "none";
+            } else {
+                sub_div.style.display = "block";
             }
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    </body>
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
 </html>
