@@ -18,13 +18,37 @@
 <body>
     <div class="teacher-signup">
         <div class="form-container">   
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="./process-signup.jsp" method="POST">
                 <h4 class="teacher-signup-title">Sign Up as an Educator</h4>
 
+                <%
+                    String message = "";
+                    String output = "";
+                    
+                    if(request.getParameter("error") != null){
+                        String error = request.getParameter("error");
+                        if(error.equals("1")){
+                            message = "Passwords does not match";
+                        }
+                        else if(error.equals("2")){
+                            message = "Please enter a valid email";
+                        }
+                        else if(error.equals("3")){
+                            message = "Please fill out all fields";
+                        }
+                        else if(error.equals("4")){
+                            message = "This username exists. Please use a different one.";
+                        }
+                        output = "<h5 class='text-danger'>" + message + "</h5>";
+                    }
+                %>
+                
+                <%= output %>
+                
+                <input type="hidden" name="user_type" value="teacher"/>
                 <input type="text" name="firstname" placeholder="Enter Firstname" class="box" required/>
                 <input type="text" name="lastname" placeholder="Enter Lastname" class="box" required/>
                 <input type="email" name="email" placeholder="Enter Email" class="box" required/>
-                <input type="text" name="phone-no" placeholder="Enter Phone Number" class="box" required/>
                 
                 <select name="edu-level" class="box" required>
                     <option value="">--None--</option>
@@ -35,7 +59,7 @@
                     <option value="Doctoral/ PhD">Doctoral/ PhD</option>
                 </select>
 
-                <input type="text" name="address" placeholder="Enter Address" class="box" required/>
+                <input type="text" name="school" placeholder="Enter School" class="box" required/>
                 <input type="text" name="username" placeholder="Enter Username" class="box" required/>
                 <input type="password" name="password" placeholder="Enter Password" class="box" required/>
                 <input type="password" name="cpassword" placeholder="Confirm Password" class="box" required/>
@@ -43,7 +67,7 @@
                 
                 <input type="submit" name="submit" class="btn1" value="Sign Up" />
 
-                <p>Already have an account? <a href="teacher-login.html">Login</a></p>
+                <p>Already have an account? <a href="teacher-login.jsp">Login</a></p>
             </form>
         </div>
     </div>
