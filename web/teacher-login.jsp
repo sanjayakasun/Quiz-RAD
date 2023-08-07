@@ -16,15 +16,31 @@
     <div class="teacher-login">
         <div class="form-container">
             
-            <form action="" method="POST">
+            <form action="process-login.jsp" method="POST">
                 <h3>Log In</h3>
-                <input type="email" name="email" placeholder="Enter Username" class="box" required />
+                <%
+                    String output = "";
+                    String msg = "";
+                    
+                    if(request.getParameter("error") != null){ 
+                        String error = request.getParameter("error");
+                        
+                        if(error.equals("1")){
+                            msg = "Username or Password is incorrect";
+                        }
+                        
+                        output = "<h5 class='text-danger'>" + msg + "</h5>";
+                    }
+                %>
+                
+                <%= output %>
+                <input type="hidden" name="user_type" value="teacher"/>
+                <input type="text" name="username" placeholder="Enter Username" class="box" required />
                 <input type="password" name="password" placeholder="Enter Password" class="box" required />
                 <input type="submit" name="submit" class="btn1" value="Log In" />
 
-                <p>Don't have an account? <a href="teacher-signup.html">Sign Up</a></p>
+                <p>Don't have an account? <a href="teacher-signup.jsp">Sign Up</a></p>
             </form>
-
         </div>
 
         <footer class="bg-light text-center">
