@@ -158,7 +158,7 @@
         </div>
     </main>
 
-    <footer class="bg-light text-center" style="position: absolute;">
+    <footer class="bg-light text-center" style="position: fixed;">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
             © 2023 All rights reserved:
             <a class="text-dark" href="index.html">WeQuiz</a>
