@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
  * @author sanjanaattanayake
  */
 
-import classes.Teacher;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
