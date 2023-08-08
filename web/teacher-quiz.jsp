@@ -43,6 +43,27 @@
 
         <main>
             <div class="container-md mt-5">
+                
+                <%
+                    String msg = "";
+                    if(request.getParameter("error") != null){
+                        String error = request.getParameter("error");
+                        if(error.equals("1")){
+                            msg = "Quiz title cannot be empty";
+                        }
+                        else if(error.equals("2")){
+                            msg = "Neither question nor answer fields can be empty";
+                        }
+                        else if(error.equals("3")){
+                            msg = "Please enter a valid value for Correct answer field. A number between 1-4";
+                        }
+                        else if(error.equals("4")){
+                            msg = "Correct option is always between 1 and 4. Check your inputs.";
+                        }
+                    }
+                %>
+                <p class="text-danger mt-3"><%= msg %></p>
+                
                 <form method="POST" action="process-teacher-quiz.jsp">
                     <input type="hidden" name="tot_ques" value="" id="tot_ques"/>
                     <input type="hidden" name="subject_id" value="<%= request.getParameter("subject_id") %>" id="subject_id"/>
@@ -114,9 +135,9 @@
         </footer>
 
         <script>
-            let questionList = [];
-            questionList.push(document.querySelector(".q1"));
-
+            let questionList = [document.querySelector(".q1")];
+             document.getElementById("tot_ques").value = "1";
+             
             let add = document.querySelector(".add");
             let questionsDiv = document.querySelector(".question_div");
             let question_number = document.querySelector(".question_number");
@@ -124,7 +145,7 @@
             let i = 2;
 
             add.addEventListener("click", function () {
-                document.getElementById("tot_ques").value=questionList.length + 1;
+                document.getElementById("tot_ques").value = questionList.length + 1;
                 
                 document.querySelector(".q" + (i - 1)).style.display = "none";
 
@@ -223,7 +244,6 @@
                             questionList[curr].style.display = "block";
                         }
                     }
-                    console.log(curr);
                 }
             }
         </script>
