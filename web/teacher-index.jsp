@@ -63,10 +63,36 @@
             </div>
 
             <div id="subject-div" style="display: none;">
-                <fieldset class="form-group">
-                    <legend>Add New Subject</legend>
-                    <form method="POST" action="">
-                        <table>
+                <fieldset class="form-group d-flex justify-content-center">
+                    <legend class="display-6">Add New Subject</legend>
+                    
+                    <%
+                        String sub_id = "";
+                        String sub_category = "";
+                        String sub_level = "";
+                        
+                        if(request.getParameter("error") != null){
+                            String error = request.getParameter("error");
+                            if(error.equals("0")){
+                                sub_id = request.getParameter("sid");
+                            }
+                            else if(error.equals("1")){
+                                sub_id = request.getParameter("sid");
+                            }
+                            
+                            String query1 = "SELECT subject_category, subject_level FROM subject WHERE subject_id=?";
+                            PreparedStatement pstmt1 = con.prepareStatement(query1);
+                            pstmt1.setString(1, sub_id);
+                            ResultSet rs1 = pstmt1.executeQuery();
+                            while(rs1.next()){
+                                sub_category = rs1.getString("subject_category");
+                                sub_level = rs1.getString("subject_level");
+                            }
+                        }
+                    %>
+                    
+                    <form method="POST" action="process-subject.jsp">
+                        <table class="w-100">
                             <thead></thead>
                             <tbody>
                                 <tr>
@@ -76,9 +102,16 @@
                                     <td>
                                         <input list="subjects" name="subject" id="subject" placeholder="Subject" class="form-control"/>
                                         <datalist id="subjects">
-                                            <option value="Sinhala"></option>
-                                            <option value="Tamil"></option>
-                                            <option value="Physics"></option>
+                                            <%
+                                                String q1 = "SELECT DISTINCT subject_category, subject_level FROM subject";
+                                                PreparedStatement p1 = con.prepareStatement(q1);
+                                                ResultSet r1 = p1.executeQuery();
+                                                while(r1.next()){
+                                                    %>
+                                                    <option value="<%= r1.getString("subject_category") %>"></option>
+                                                    <%
+                                                }
+                                            %>                
                                         </datalist>
                                     </td>
                                 </tr>
@@ -89,9 +122,14 @@
                                     <td>
                                         <input list="levels" name="level" id="level" placeholder="Level" class="form-control"/>
                                         <datalist id="levels">
-                                            <option value="Grade 6"></option>
-                                            <option value="Grade 7"></option>
-                                            <option value="Grade 8"></option>
+                                            <%  
+                                                ResultSet r2 = p1.executeQuery();
+                                                while(r2.next()){
+                                                    %>
+                                                    <option value="<%= r2.getString("subject_level")%>"</option>
+                                                    <%
+                                                }
+                                            %>                                           
                                         </datalist>
                                     </td>
                                 </tr>
@@ -112,11 +150,11 @@
             <div class="mt-5 mb-5">
                 <div class="row mb-4">
                     <div class="col">
-                        <h3 class="h3"><% out.println(rs.getString("subject_category") + " - " + rs.getString("subject_level"));  %></h3>
+                        <h3 class="h3"><% out.println(rs.getString("subject_level") + " - " + rs.getString("subject_category"));  %></h3>
                     </div>
                     <div class="col ms-auto text-end">
                         <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%=curr%>'">Add New Quiz</button>
-                    </div>
+                    </div>    
                 </div>
 
                 <div class="row">
@@ -154,11 +192,26 @@
                         prev = curr;
                     }
                 }
-            %>         
+            %> 
+            
+            <%
+                if(!sub_category.equals("") && !sub_level.equals("")){
+                %>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <h3 class="h3"><% out.println(sub_level + " - " + sub_category) ;  %></h3>
+                        </div>
+                        <div class="col ms-auto text-end">
+                            <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%=sub_id%>'">Add New Quiz</button>
+                        </div>
+                    </div>
+                <%
+                }
+            %>
         </div>
     </main>
 
-    <footer class="bg-light text-center" style="position: fixed;">
+    <footer class="bg-light text-center" style="position: sticky;">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
             © 2023 All rights reserved:
             <a class="text-dark" href="index.html">WeQuiz</a>
