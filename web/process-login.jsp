@@ -21,8 +21,7 @@
             response.sendRedirect("teacher-login.jsp?error=1");
         }
         else{
-            Cookie cookie = new Cookie("teacher_id", teacher_id);
-            response.addCookie(cookie);
+            session.setAttribute("teacher_id", teacher_id);
             response.sendRedirect("teacher-index.jsp");
         }        
     }

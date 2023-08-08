@@ -4,16 +4,7 @@
 <%@page import="java.sql.ResultSet" %>
 
 <%
-    String teacher_id = "";
-
-    Cookie[] cookies = request.getCookies();
-
-    for (int i = 0; i < cookies.length; i++) {
-        Cookie cookie = cookies[i];
-        if (cookie.getName().equals("teacher_id")) {
-            teacher_id = cookie.getValue();
-        }
-    }
+    String teacher_id = String.valueOf(session.getAttribute("teacher_id"));
 
     Connection con = DBConnector.getConnection();
     String query = "SELECT quiz.quiz_id, quiz.subject_id, quiz.quiz_title, quiz.is_public, quiz.code, subject.subject_category, "
@@ -54,7 +45,9 @@
                     </div>
 
                     <div class="d-flex ms-auto order-5">
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">Logout</button>
+                        <form method="POST" action="process-logout.jsp?redirect=1">
+                            <input type="submit" class="btn btn-primary me-3" value="Logout"/>
+                        </form>                     
                     </div>
                 </div>
             </div>
@@ -122,7 +115,7 @@
                         <h3 class="h3"><% out.println(rs.getString("subject_category") + " - " + rs.getString("subject_level"));  %></h3>
                     </div>
                     <div class="col ms-auto text-end">
-                        <button class="btn btn-info" onclick="location.href = 'teacher-quiz.jsp?subject_id<% out.println(curr); %>'">Add New Quiz</button>
+                        <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%=curr%>'">Add New Quiz</button>
                     </div>
                 </div>
 
@@ -165,7 +158,7 @@
         </div>
     </main>
 
-    <footer class="bg-light text-center" style="position: relative;">
+    <footer class="bg-light text-center" style="position: absolute;">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
             © 2023 All rights reserved:
             <a class="text-dark" href="index.html">WeQuiz</a>
@@ -175,7 +168,7 @@
     <script>
         function showHideSubject() {
             let sub_div = document.getElementById("subject-div");
-            if (sub_div.style.display == "block") {
+            if (sub_div.style.display === "block") {
                 sub_div.style.display = "none";
             } else {
                 sub_div.style.display = "block";
