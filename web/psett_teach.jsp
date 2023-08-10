@@ -1,3 +1,16 @@
+<%-- 
+    Document   : psett_teach
+    Created on : Aug 10, 2023, 9:12:53 PM
+    Author     : Acer
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="classes.MD5" %>
+<%@page import="classes.DBConnector"%>
+<%@page import="classes.Update"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,16 +22,72 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
+        
+        <%
+            String up = request.getParameter("update");
+            if (up != null) {
+                String fname_up = request.getParameter("fname");
+                String lname_up = request.getParameter("lname");
+                String uname_up = request.getParameter("uname");
+                String email_up = request.getParameter("email");
+                String edu_up = request.getParameter("edu");
+                String scl_up = request.getParameter("scl");
+                String pw_up = request.getParameter("old_pw");
+                
+                String url = "sssssss";
+                String query_up = "UPDATE teacher SET first_name=?, last_name=?, email=?, username=?, password=?, profile_pic=?,education=? ,school=? WHERE teacher_id = ?";
+                Connection con = DBConnector.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(query_up);
+                pstmt.setString(1, fname_up);
+                pstmt.setString(2, lname_up);
+                pstmt.setString(3, email_up);
+                pstmt.setString(4, uname_up);
+                pstmt.setString(5, pw_up);
+                pstmt.setString(6, url);
+                pstmt.setString(7,edu_up);
+                pstmt.setString(8, scl_up);
+                pstmt.setString(9, up);
+
+                int a = pstmt.executeUpdate();
+                if (a > 0) {
+                    out.println("<h1 class='text-center' style='color:green;'>Successfully Updated </h1>");
+                } else {
+                    out.println("<h1 class='text-center' style='color:red;'> Update Didnot  </h1>");
+                }
+            }
+
+
+        %>
+
+
+
+        <%            String query = "SELECT * FROM teacher WHERE teacher_id = '1'";
+            Connection con = DBConnector.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String fname = rs.getString("first_name");
+                String lname = rs.getString("last_name");
+                String email = rs.getString("email");
+                String uname = rs.getString("username");
+                int id = rs.getInt("teacher_id");
+                String pw = rs.getString("password");
+                String edu = rs.getString("education");
+                String scl = rs.getString("school");
+        %>
+        
         <section class="py-5 my-5">
             <div class="container">
                 <h1 class="mb-5">Teacher Account Settings</h1>
+                <form method="POST" action="psett_teach.jsp?update=<%= id %>">
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">
                     <div class="profile-tab-nav border-right">
                         <div class="p-4">
                             <div class="img-circle text-center mb-3">
                                 <img src="img/tory.jpeg" alt="Image" class="shadow">
                             </div>
-                            <h4 class="text-center">Kasun Sanjaya</h4>
+                            <h4 class="text-center"><% out.println(fname + " " + lname);%></h4>
                         </div>
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
@@ -48,37 +117,37 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="<%out.println(fname);%> " name="fname">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="<%out.println(lname);%>" name="lname">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" value="">
+                                        <input type="email" class="form-control" value="<%out.println(email);%>" name="email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>User Name</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="<%out.println(uname);%>" name="uname">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Highest Education Qualification</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="<%out.println(edu);%>" name="edu">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>College/Institute Name</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" value="<%out.println(scl);%>" name="scl">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -95,7 +164,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Old password</label>
-                                        <input type="password" class="form-control" disabled="">
+                                        <input type="password" class="form-control" disabled="" value="<%out.println(pw);%>">
                                     </div>
                                 </div>
                             </div>
@@ -108,33 +177,11 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade" id="application" role="tabpanel" aria-labelledby="application-tab">
-                            <h3 class="mb-4">Application Settings</h3>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="app-check">
-                                            <label class="form-check-label" for="app-check">
-                                                App check
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" >
-                                            <label class="form-check-label" for="defaultCheck2">
-                                                Lorem ipsum dolor sit.
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="tab-pane fade" id="notification" role="tabpanel" aria-labelledby="notification-tab">
                             <h3 class="mb-4">Notification Settings</h3>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="notification1">
+                                    <input class="form-check-input" type="checkbox" value="" id="notification1" checked="">
                                     <label class="form-check-label" for="notification1">
                                         Notify About New Quiz Atemp
                                     </label>
@@ -142,7 +189,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="notification2" >
+                                    <input class="form-check-input" type="checkbox" value="" id="notification2" checked="">
                                     <label class="form-check-label" for="notification2">
                                         Notify About New Assessments Submission 
                                     </label>
@@ -150,7 +197,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="notification2" >
+                                    <input class="form-check-input" type="checkbox" value="" id="notification3" checked="">
                                     <label class="form-check-label" for="notification2">
                                         Notify About New Student Enrollment for my Course 
                                     </label>
@@ -158,7 +205,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="notification3" >
+                                    <input class="form-check-input" type="checkbox" value="" id="notification4" checked="">
                                     <label class="form-check-label" for="notification3">
                                         Notify About End Exams Dates
                                     </label>
@@ -167,8 +214,10 @@
                         </div>
                     </div>
                 </div>
+                </form> 
             </div>
         </section>
+                <% }%>
 
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

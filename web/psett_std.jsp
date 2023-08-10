@@ -46,7 +46,7 @@
                 if (a > 0) {
                     out.println("<h1 class='text-center' style='color:green;'>Successfully Updated </h1>");
                 } else {
-                    out.println("<h1 class='text-center' style='color:red;'> Update Didnot Success </h1>");
+                    out.println("<h1 class='text-center' style='color:red;'> Update Didnot  </h1>");
                 }
             }
 
@@ -55,7 +55,7 @@
 
 
 
-        <%            String query = "SELECT * FROM student WHERE student_id = '2'";
+        <%            String query = "SELECT * FROM student WHERE student_id = '1'";
             Connection con = DBConnector.getConnection();
             PreparedStatement pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
@@ -76,7 +76,7 @@
                         <div class="profile-tab-nav border-right">
                             <div class="p-4">
                                 <div class="img-circle text-center mb-3">
-                                    <img src="img/tory.jpeg" alt="Image" class="shadow">
+                                    <img src="img/kasun.jpg" alt="Image" class="shadow">
                                 </div>
                                 <h4 class="text-center"><% out.println(fname + " " + lname);%></h4>
                             </div>
