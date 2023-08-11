@@ -87,6 +87,12 @@
                     <div class="col">
                         <h2 class="display-5 mt-3 mb-3"><% out.println(level + " - " + subject); %></h2>
                     </div>
+                    <div class="col text-end">
+                        <form action="process-delete-quiz.jsp?quiz_id=<%= quiz_id %>" method="POST"
+                              onsubmit="confirm('This action cannot be undone. Are you sure you want to proceed?')">
+                            <input type="submit" class="btn btn-danger mt-2 mt-4 mb-3" value="Delete Quiz"/>
+                        </form>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
