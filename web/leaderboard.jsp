@@ -157,7 +157,7 @@
                                     <h2 style="color: #75aadb;">
                                         Welcome to Our Quiz
                                         <span style="color: #d12d33;"><strong> 
-                                                Leaderboard!</strong>
+                                               </strong>
                                         </span>
                                     </h2>
                                     <p class="d-inline-block" style="width: 50%;"><strong>
