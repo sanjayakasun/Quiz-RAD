@@ -21,6 +21,29 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid nav">
+                <a class="navbar-brand" href="index.html">WeQuiz</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                        <a class="nav-link" href="student-quizzes.html">Quizzes</a>
+                        <a class="nav-link" href="student-educators.html">Educators</a>         
+                        <a class="nav-link active" href="student-settings.jsp">Settings</a>         
+                    </div>
+
+                    <div class="d-flex ms-auto order-5">
+                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.html'">Login</button>
+                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
         <%
             String up = request.getParameter("update");
             if (up != null) {

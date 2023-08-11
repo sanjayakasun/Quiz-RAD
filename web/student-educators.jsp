@@ -44,14 +44,15 @@
                     <div class="navbar-nav">
                         <a class="nav-link" aria-current="page" href="index.html">Home</a>
                         <a class="nav-link" href="student-quizzes.html">Quizzes</a>
-                        <a class="nav-link active" href="student-educators.html">Educators</a>              
+                        <a class="nav-link active" href="student-educators.jsp">Educators</a> 
+                        <a class="nav-link" href="student-settings.jsp">Settings</a>     
                     </div>
 
                     <div class="d-flex ms-auto order-5">
                         <button type="button" class="btn btn-primary me-3"
-                                onclick="location.href = 'student-login.html'">Login</button>
+                                onclick="location.href = 'student-login.jsp'">Login</button>
                         <button type="button" class="btn btn-primary me-3"
-                                onclick="location.href = 'teacher-login.html'">For Educators</button>
+                                onclick="location.href = 'teacher-login.jsp'">For Educators</button>
                     </div>
                 </div>
             </div>
