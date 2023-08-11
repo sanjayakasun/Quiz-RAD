@@ -4,6 +4,12 @@
 <%@page import="java.sql.ResultSet" %>
 
 <%
+    if(session.getAttribute("teacher_id") == null){
+        response.sendRedirect("teacher-login.jsp");
+    }
+%>
+
+<%
     String teacher_id = String.valueOf(session.getAttribute("teacher_id"));
 
     Connection con = DBConnector.getConnection();
@@ -40,13 +46,13 @@
 
                 <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link" aria-current="page" href="index.html">Main - Home</a>
+                        <a class="nav-link" aria-current="page" href="index.jsp">Main - Home</a>
                         <a class="nav-link active" aria-current="page" href="teacher-index.jsp">Teacher - Home</a> 
                         <a class="nav-link" aria-current="page" href="teacher-settings.jsp">Settings</a>
                     </div>
 
                     <div class="d-flex ms-auto order-5">
-                        <form method="POST" action="process-logout.jsp?redirect=1">
+                        <form method="POST" action="process-logout.jsp">
                             <input type="submit" class="btn btn-primary me-3" value="Logout"/>
                         </form>                     
                     </div>

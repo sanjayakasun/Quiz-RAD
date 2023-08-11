@@ -9,7 +9,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="classes.MD5" %>
 <%@page import="classes.DBConnector"%>
-<%@page import="classes.Update"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,31 +19,50 @@
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="./css/style-main.css">
     </head>
     <body>
         <!-- NAVBAR -->
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid nav">
-                <a class="navbar-brand" href="index.html">WeQuiz</a>
+                <a class="navbar-brand" href="index.jsp">WeQuiz</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                        <a class="nav-link" href="student-quizzes.html">Quizzes</a>
-                        <a class="nav-link" href="student-educators.html">Educators</a>         
-                        <a class="nav-link active" href="student-settings.jsp">Settings</a>         
+                        <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
+                        <a class="nav-link" href="student-quizzes.jsp">Quizzes</a>
+                        <a class="nav-link" href="student-educators.jsp">Educators</a> 
+                        <a class="nav-link" href="student-settings.jsp">Settings</a>        
+                        <%
+                            if (session.getAttribute("teacher_id") != null) {
+                        %>
+                        <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
+                        <%
+                            }
+                        %>
                     </div>
 
-                    <div class="d-flex ms-auto order-5">
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.html'">Login</button>
+                    <div class=" justify-content-end">
+                        <%
+                            if (session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null) {
+                        %>
+                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.jsp'">Login</button>
                         <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
+                        <%
+                        } else {
+                        %>
+                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'process-logout.jsp'">Logout</button>
+                        <%
+                            }
+                        %>                                           
                     </div>
                 </div>
             </div>
         </nav>
+
         <%
             String up = request.getParameter("update");
             if (up != null) {
@@ -191,7 +210,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!--                                <div>
                                                                     <button class="btn btn-primary">Update</button>
                                                                     <button class="btn btn-light">Cancel</button>

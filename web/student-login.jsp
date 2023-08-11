@@ -13,7 +13,7 @@
         if (!(email.isEmpty()) && !(password.isEmpty())) {
             String user_pass = MD5.getMd5(password);
             Connection con = DBConnector.getConnection();
-            String query = "SELECT email,password FROM student WHERE email = ? AND password = ?";
+            String query = "SELECT student_id, email,password FROM student WHERE email = ? AND password = ?";
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, email);
             pstmt.setString(2, user_pass);
@@ -23,7 +23,8 @@
                 out.print("success");
                 String db_pass = rs.getString("password");
                 if (db_pass.equals(user_pass)) {
-                   response.sendRedirect("index.html");
+                    session.setAttribute("student_id", rs.getString("student_id"));
+                    response.sendRedirect("index.jsp");
                 }
             } else {
                 set = 1; 

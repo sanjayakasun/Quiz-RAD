@@ -9,7 +9,12 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="classes.MD5" %>
 <%@page import="classes.DBConnector"%>
-<%@page import="classes.Update"%>
+
+<%
+    if(session.getAttribute("teacher_id") == null){
+        response.sendRedirect("teacher-login.jsp");
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
