@@ -154,7 +154,7 @@
                         <h3 class="h3"><% out.println(rs.getString("subject_level") + " - " + rs.getString("subject_category"));  %></h3>
                     </div>
                     <div class="col ms-auto text-end">
-                        <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%= curr %>'">Add New Quiz</button>
+                        <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%= request.getParameter("sid") %>'">Add New Quiz</button>
                     </div>    
                 </div>
 
@@ -163,7 +163,7 @@
                         <div class="container mt-3 mb-3">
                             <div class="cards">
                                 <div class="row">
-                                    <div class="col text-center">
+                                    <div class="col-md-4 text-center">
                                         <h5 class="h5 mt-2"><% out.println(rs.getString("quiz_title")); %></h5>
                                     </div>
                                     <div class="col text-center">
@@ -178,10 +178,11 @@
                                             %>
                                         </p>
                                     </div>
-                                    <div class="col text-center">
+                                    <div class="col-md-5 text-center">
                                         <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-view-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">View Quiz</button>
                                         <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                        <button class="btn btn-primary mt-2">Edit Quiz</button>
+                                        <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-edit-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">Edit Quiz</button>
+                                        <button class="btn btn-danger mt-2" onclick="location.href = 'process-delete-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">Delete Quiz</button>
                                     </div>  
                                 </div>
                             </div>
