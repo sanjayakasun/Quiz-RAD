@@ -163,7 +163,7 @@
                         <div class="container mt-3 mb-3">
                             <div class="cards">
                                 <div class="row">
-                                    <div class="col-md-4 text-center">
+                                    <div class="col-md text-center">
                                         <h5 class="h5 mt-2"><% out.println(rs.getString("quiz_title")); %></h5>
                                     </div>
                                     <div class="col text-center">
@@ -178,11 +178,10 @@
                                             %>
                                         </p>
                                     </div>
-                                    <div class="col-md-5 text-center">
+                                    <div class="col-md text-center">
                                         <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-view-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">View Quiz</button>
                                         <button class="btn btn-primary mt-2">Show Leaderboard</button>
-                                        <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-edit-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">Edit Quiz</button>
-                                        <button class="btn btn-danger mt-2" onclick="location.href = 'process-delete-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">Delete Quiz</button>
+                                        <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-edit-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">Edit Quiz</button>                                     
                                     </div>  
                                 </div>
                             </div>
@@ -230,6 +229,7 @@
             }
         }
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
