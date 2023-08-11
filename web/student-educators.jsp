@@ -5,7 +5,7 @@
 
 <%
     Connection con = DBConnector.getConnection();
-    String sql = "SELECT teacher.first_name, teacher.last_name, teacher.email, teacher.education, teacher.profile_pic, teacher.school, subject.subject_category FROM teacher, subject,quiz WHERE teacher.teacher_id = quiz.teacher_id AND quiz.subject_id = subject.subject_id;";
+    String sql = "SELECT DISTINCT teacher.first_name, teacher.last_name, teacher.email, teacher.education, teacher.profile_pic, teacher.school, subject.subject_category FROM teacher, subject,quiz WHERE teacher.teacher_id = quiz.teacher_id AND quiz.subject_id = subject.subject_id;";
     PreparedStatement pstmt = con.prepareStatement(sql);
     ResultSet rs = pstmt.executeQuery();
 
