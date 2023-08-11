@@ -154,7 +154,7 @@
                         <h3 class="h3"><% out.println(rs.getString("subject_level") + " - " + rs.getString("subject_category"));  %></h3>
                     </div>
                     <div class="col ms-auto text-end">
-                        <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%=curr%>'">Add New Quiz</button>
+                        <button class="btn btn-info" onclick="location.href='teacher-quiz.jsp?subject_id=<%= curr %>'">Add New Quiz</button>
                     </div>    
                 </div>
 
@@ -179,7 +179,7 @@
                                         </p>
                                     </div>
                                     <div class="col text-center">
-                                        <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Quiz</button>
+                                        <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-view-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">View Quiz</button>
                                         <button class="btn btn-primary mt-2">Show Leaderboard</button>
                                         <button class="btn btn-primary mt-2">Edit Quiz</button>
                                     </div>  
