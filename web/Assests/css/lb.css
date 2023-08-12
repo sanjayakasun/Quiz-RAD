@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 12, 2023, 5:06:40 PM
+    Author     : kavee
+*/
+
+.navbar{
+    background-color: rgb(192 132 252);
+}
+.navbar-brand {
+    color: #fff; 
+}
+
+.navbar-nav .nav-link {
+    color: #fff; 
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0c4645; 
+}
+
+.dropdown-item {
+    color: #b2afaf; 
+}
+
+.dropdown-item:hover {
+    background-color: #ffc107; 
+}
+
+.dropdown-menu a{
+    background-color: rgba(131, 118, 141, 0.377); 
+}
+
+#ipi-table {
+    background-color: rgb(15, 23, 42);
+}
