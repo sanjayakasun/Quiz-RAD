@@ -6,6 +6,20 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<%@page import="classes.DBConnector" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.util.ArrayList" %>
+
+<%
+    String student_id = String.valueOf(session.getAttribute("student_id"));
+    Connection con = DBConnector.getConnection();
+    String query = "SELECT DISTINCT subject.subject_id, subject.subject_category, subject.subject_level FROM subject, quiz WHERE quiz.subject_id = subject.subject_id";
+    PreparedStatement pstmt = con.prepareStatement(query);
+    ResultSet rs = pstmt.executeQuery();
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,144 +79,116 @@
 
 
         <main>
-            <div class="container-md">
-                <div class="mt-5">
-                    <form method="POST" action="" class="form-group">
-                        <div class="row text-center">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col ms-auto text-end">
-                                        <label for="subject">Choose Subject</label>
-                                    </div>
-                                    <div class="col">
-                                        <select name="subject" id="subject" class="form-control">
-                                            <option value="Maths">Maths</option>
-                                            <option value="Science">Science</option>
-                                            <option value="Geogrpahy">Geogrpahy</option>
-                                            <option value="Citizenship Education">Citizenship Education</option>
-                                            <option value="Western Music">Western Music</option>
-                                        </select>
-                                    </div>
-                                </div>                     
-                            </div>
-
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col ms-auto text-end">
-                                        <label for="level">Choose Level</label>
-                                    </div>
-                                    <div class="col">
-                                        <select name="level" id="level" class="form-control">
-                                            <option value="6">Grade 6</option>
-                                            <option value="7">Grade 7</option>
-                                            <option value="8">Grade 8</option>
-                                            <option value="9">Grade 9</option>
-                                            <option value="10">Grade 10</option>
-                                            <option value="11">Grade 11</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col ms-auto text-start">
-                                <input type="submit" name="submit" value="Search" class="btn btn-primary">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
+            <div class="container-md">             
                 <div>
-                    <div class="row mt-5">
-                        <div class="col">
-                            <h4 class="display-6">Maths - Grade 8</h4>
-                        </div>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col">
-                            <div class="container mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Time Zones</h5>
+                    <%
+                        while(rs.next()){
+                        %>
+                            <div class="row mt-5">
+                                <div class="col">
+                                    <h4 class="display-6"><% out.println(rs.getString("subject_level") + " - " + rs.getString("subject_category")); %></h4>
+                                </div>
+                                <%
+                                    String query2 = "SELECT * FROM quiz WHERE subject_id = ?";
+                                    PreparedStatement pstmt2 = con.prepareStatement(query2);
+                                    pstmt2.setString(1, rs.getString("subject_id"));
+                                    ResultSet rs2 = pstmt2.executeQuery();
+                                    while(rs2.next()){
+                                        %>
+                                        <div class="row mt-5">
+                                            <div class="col">
+                                                <div class="container mb-3">
+                                                    <div class="cards">
+                                                        <div class="row">
+                                                            <div class="col text-center">
+                                                                <h5 class="h5 mt-2"><%= rs2.getString("quiz_title") %></h5>
+                                                            </div>
+                                                            <div class="col text-center">
+                                                                <p class="mt-2">
+                                                                    <% 
+                                                                        if(rs2.getBoolean("is_public")){
+                                                                            out.println("Public");
+                                                                        }  
+                                                                        else{
+                                                                            out.println("Private");
+                                                                        }
+                                                                    %>                        
+                                                                </p>
+                                                            </div>
+                                                            <div class="col text-center">
+                                                                <%
+                                                                    ArrayList <String> attempts = new ArrayList();
+                                                                    String query3 = "SELECT DISTINCT student_id FROM student_answer WHERE quiz_id=?";
+                                                                    PreparedStatement pstmt3 = con.prepareStatement(query3);
+                                                                    pstmt3.setString(1, rs2.getString("quiz_id"));
+                                                                    ResultSet rs3 = pstmt3.executeQuery();
+                                                                    while(rs3.next()){
+                                                                        attempts.add(rs3.getString("student_id"));
+                                                                    }
+                                                                    
+                                                                    if(!attempts.contains(student_id)){
+                                                                        %>
+                                                                        <button class="btn btn-primary mt-2" disabled="">View Last Attempt</button>
+                                                                        <%
+                                                                    }
+                                                                    else{
+                                                                        %>
+                                                                        <button class="btn btn-primary mt-2" onclick="location.href = 'student-view-quiz.jsp?quiz_id=<%= rs2.getString("quiz_id") %>'">View Last Attempt</button>
+                                                                        <%
+                                                                    }
+                                                                %>                                                          
+                                                                <button class="btn btn-primary mt-2">Leaderboard</button>
+                                                                <button class="btn btn-primary mt-2" onclick="location.href = 'student-quiz.jsp?quiz_id=<%= rs2.getString("quiz_id") %>'">Attempt</button>
+                                                            </div>  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
+                                        <%
+                                    }
+                                %>
+                            </div>
+                        <%
+                        }
+                    %>
+                    
+                    <%--
+                        while(rs.next()){
+                            %>
+                            <div class="row mt-5">
+                                <div class="col">
+                                    <div class="container mb-3">
+                                        <div class="cards">
+                                            <div class="row">
+                                                <div class="col text-center">
+                                                    <h5 class="h5 mt-2"><%= rs.getString("quiz_title") %></h5>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <p class="mt-2">
+                                                        <% 
+                                                            if(rs.getBoolean("is_public")){
+                                                                out.println("Public");
+                                                            }  
+                                                            else{
+                                                                out.println("Private");
+                                                            }
+                                                        %>                        
+                                                    </p>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <button class="btn btn-primary mt-2" onclick="location.href = 'student-view-quiz.jsp'">View Last Attempt</button>
+                                                    <button class="btn btn-primary mt-2">Leaderboard</button>
+                                                    <button class="btn btn-primary mt-2" onclick="location.href = 'student-quiz.jsp'">Attempt</button>
+                                                </div>  
+                                            </div>
                                         </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Last Attempt</button>
-                                            <button class="btn btn-primary mt-2">Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Attempt</button>
-                                        </div>  
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-5">
-                        <div class="col">
-                            <div class="container mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Time Zones</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Last Attempt</button>
-                                            <button class="btn btn-primary mt-2">Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Attempt</button>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-5">
-                        <div class="col">
-                            <div class="container mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Time Zones</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Last Attempt</button>
-                                            <button class="btn btn-primary mt-2">Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Attempt</button>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-5">
-                        <div class="col">
-                            <div class="container mb-3">
-                                <div class="cards">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="h5 mt-2">Time Zones</h5>
-                                        </div>
-                                        <div class="col text-center">
-                                            <p class="mt-2">Private</p>
-                                        </div>
-                                        <div class="col text-center">
-                                            <button class="btn btn-primary mt-2" onclick="location.href = 'view-quiz.html'">View Last Attempt</button>
-                                            <button class="btn btn-primary mt-2">Leaderboard</button>
-                                            <button class="btn btn-primary mt-2">Attempt</button>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <%
+                        }
+                    --%>                                
                 </div>
             </div>
         </main>
