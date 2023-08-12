@@ -1,28 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
-
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Acer
+ * @author sanjanaattanayake
  */
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 public class DBConnector {
+    private static final String URL = "jdbc:mysql://localhost:3306/we_quiz";
+    private static final String USERNAME = "testuser";
+    private static final String PASSWORD = "testuser";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    final static String DB_USER = "testuser";
-    final static String DB_PW = "testuser";
-    final static String DB_URL = "jdbc:mysql://localhost:3306/quiz";
-    final static String DRIVER = "com.mysql.jdbc.Driver";
-
-    public static Connection getConnection() throws Exception {
+    public static Connection getConnection() throws Exception{
         Class.forName(DRIVER);
-        Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PW);
+        Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         return con;
-    }
+    } 
 }
