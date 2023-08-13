@@ -45,15 +45,9 @@
     }
     else{
         if(user_type.equals("teacher")){
-            if(profile_pic == ""){
-                Teacher teacher = new Teacher(firstname, lastname, email, username, password, profile_pic, education, school);
-
-            }
-            else{
-                Teacher teacher = new Teacher(firstname, lastname, email, username, password, education, school);
-                boolean status = teacher.addTeacher(false);
-                response.sendRedirect("teacher-login.jsp?error=0");
-            }
+            Teacher teacher = new Teacher(firstname, lastname, email, username, password, education, school);
+            teacher.addTeacher();
+            response.sendRedirect("teacher-login.jsp?error=0");
         }
         else if(user_type.equals("student")){
     

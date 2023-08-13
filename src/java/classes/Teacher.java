@@ -32,7 +32,7 @@ public class Teacher {
     
     public Teacher(){}
     
-    public boolean addTeacher(boolean profilePic){
+    public boolean addTeacher(){
         boolean status = false;
         
         try {
