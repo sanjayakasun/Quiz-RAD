@@ -17,9 +17,6 @@ function showTab(tabNo){
  document.getElementById("typ-"+tabNo).classList.remove("hide");
  document.getElementById("typ-"+tabNo).classList.add("show");
 
-
-
-
  runOnce = true;
 
 }

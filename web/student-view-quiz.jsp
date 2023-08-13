@@ -86,30 +86,32 @@
 
                 <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
+                        <a class="nav-link" aria-current="page" href="index.jsp">Home</a>
                         <a class="nav-link" href="student-quizzes.jsp">Quizzes</a>
                         <a class="nav-link" href="student-educators.jsp">Educators</a> 
+                         <a class="nav-link" aria-current="page" href="leaderboard.jsp">Leaderboard</a>
                         <a class="nav-link" href="student-settings.jsp">Settings</a>        
-                        <%                            
-                            if (session.getAttribute("teacher_id") != null) {
-                        %>
-                                <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
                         <%
+                            if(session.getAttribute("teacher_id") != null){
+                            %>
+                                <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
+                            <%
                             }
                         %>
                     </div>
 
                     <div class="d-flex ms-auto order-5">
                         <%
-                            if (session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null) {
-                        %>
+                            if(session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null){
+                            %>
                                 <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.jsp'">Login</button>
                                 <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
-                        <%
-                        } else {
-                        %>
+                            <%
+                            }
+                            else{
+                            %>
                                 <button type="button" class="btn btn-primary me-3" onclick="location.href = 'process-logout.jsp'">Logout</button>
-                        <%
+                            <%
                             }
                         %>                                           
                     </div>

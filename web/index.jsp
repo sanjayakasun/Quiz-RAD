@@ -10,7 +10,7 @@
 <html>
     <head>
         <title>WeQuiz</title>
-        <link rel="icon" type="image/png" href="favicon.png">
+        <link rel="icon" type="image/png" href="./assets/img/favicon.jpeg">
         
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +35,7 @@
                         <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
                         <a class="nav-link" href="student-quizzes.jsp">Quizzes</a>
                         <a class="nav-link" href="student-educators.jsp">Educators</a> 
+                         <a class="nav-link" aria-current="page" href="leaderboard.jsp">Leaderboard</a>
                         <a class="nav-link" href="student-settings.jsp">Settings</a>        
                         <%
                             if(session.getAttribute("teacher_id") != null){
@@ -145,7 +146,7 @@
                         <div class="p-3">
                             <div class="cards">
                                 <h5 class="h5">Grade 6</h5>
-                                <p>Maths</p>
+                                <p>English</p>
                             </div>
                         </div>
                     </a>
@@ -154,7 +155,7 @@
                     <a href="#">
                         <div class="p-3">
                             <div class="cards">
-                                <h5 class="h5">Grade 6</h5>
+                                <h5 class="h5">Grade 11</h5>
                                 <p>Maths</p>
                             </div>
                         </div>
@@ -174,9 +175,9 @@
                     <a href="#">
                         <div class="p-3">
                             <div class="tutor-card text-center">
-                                <img src="./assets/profile-pics/person1.jpg" class="img-thumbnail profile-pic mb-2">
-                                <h5 class="h5">Cameron Chan</h5>
-                                <p>Maths</p>
+                                <img src="./assets/profile-pics/1.jpg" class="img-thumbnail profile-pic mb-2">
+                                <h5 class="h5">Senzo Macmillan</h5>
+                                <p>English</p>
                             </div>
                         </div>
                     </a>
@@ -185,9 +186,9 @@
                     <a href="#">
                         <div class="p-3">
                             <div class="tutor-card text-center">
-                                <img src="./assets/profile-pics/person1.jpg" class="img-thumbnail profile-pic mb-2">
-                                <h5 class="h5">Cameron Chan</h5>
-                                <p>Maths</p>
+                                <img src="./assets/profile-pics/2.png" class="img-thumbnail profile-pic mb-2">
+                                <h5 class="h5">Finn Nash</h5>
+                                <p>English</p>
                             </div>
                         </div>
                     </a>
@@ -196,8 +197,8 @@
                     <a href="#">
                         <div class="p-3">
                             <div class="tutor-card text-center">
-                                <img src="./assets/profile-pics/person1.jpg" class="img-thumbnail profile-pic mb-2">
-                                <h5 class="h5">Cameron Chan</h5>
+                                <img src="./assets/profile-pics/3.jpeg" class="img-thumbnail profile-pic mb-2">
+                                <h5 class="h5">Supun Mahanama</h5>
                                 <p>Maths</p>
                             </div>
                         </div>
@@ -209,7 +210,7 @@
         <footer class="bg-light text-center">
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
                 © 2023 All rights reserved:
-                <a class="text-dark" href="index.html">WeQuiz</a>
+                <a class="text-dark" href="index.jsp">WeQuiz</a>
               </div>
         </footer>
         

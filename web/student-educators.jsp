@@ -20,14 +20,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <link rel="stylesheet" href="./css/teacher-interface.css">
-        <link rel="stylesheet" href="./assets/fonts/fontawesome-all.min.css">
-
         <!-- BOOTSTRAP V 5.0 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="./css/style-main.css">
+        <link rel="stylesheet" href="./css/teacher-interface.css">
+        <link rel="stylesheet" href="./assets/fonts/fontawesome-all.min.css">
     </head>
 
     <body>
@@ -41,9 +40,10 @@
 
                 <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
+                        <a class="nav-link" aria-current="page" href="index.jsp">Home</a>
                         <a class="nav-link" href="student-quizzes.jsp">Quizzes</a>
-                        <a class="nav-link" href="student-educators.jsp">Educators</a> 
+                        <a class="nav-link active" href="student-educators.jsp">Educators</a> 
+                         <a class="nav-link" aria-current="page" href="leaderboard.jsp">Leaderboard</a>
                         <a class="nav-link" href="student-settings.jsp">Settings</a>        
                         <%
                             if(session.getAttribute("teacher_id") != null){
@@ -82,14 +82,13 @@
                     <!-- Teacher Card 1 -->
                     <% while (rs.next()) { %>   
                     <div class="col">
-                        <div class="card teacher-card">
-                            <img src="./assets/profile-pics/person1.jpg" class="card-img-top assets/img/T1" alt="Teacher 1">
+                        <div class="card teacher-card" height="100px">
+                            <img src="<%= rs.getString("profile_pic") %>" class="card-img-top" alt="Teacher 1" height="400px">
                             <div class="card-body">
                                 <h5 class="card-title"><% out.print(rs.getString("first_name") + " " + rs.getString("last_name")); %></h5>
                                 <p class="card-text"><strong>Subject:</strong> <% out.print(rs.getString("subject_category")); %></p>
                                 <p class="card-text"> <% out.print(rs.getString("education") + " at " + rs.getString("school")); %></p>
                                 <p class="card-text"> <% out.print(rs.getString("email")); %></p>
-
 
                                 <!-- Add more teacher details as needed -->
                             </div>
