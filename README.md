@@ -10,3 +10,9 @@
   <li>Public leaderboard for mark comparisions</li>
   <li>Private and Public quiz creation</li>
 </ol>
+
+<h3>Technologies Used</h3>
+<p>
+  <b>Frontend: </b>HTML, CSS, JavaScript, Bootstrap <br>
+  <b>Backend: </b>JSP (Java), MySQL <br>
+</p>
