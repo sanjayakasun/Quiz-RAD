@@ -128,7 +128,7 @@
                 </div>
                  <div class="row">
                     <div class="col text-center">
-                        <h2 class="display-2 mb-4 text-light"><%= marks  %></h2>
+                        <h2 class="display-2 mb-4 text-light">Your Marks: <%= marks  %></h2>
                     </div>
                 </div>
                 <div class="row">
