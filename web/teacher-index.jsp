@@ -185,8 +185,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md text-center">
-                                        <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-view-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">View Quiz</button>
-                                        <button class="btn btn-primary mt-2">Show Leaderboard</button>
+                                        <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-view-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">View Quiz</button>                                       
                                         <button class="btn btn-primary mt-2" onclick="location.href = 'teacher-edit-quiz.jsp?quiz_id=<%= rs.getString("quiz_id") %>'">Edit Quiz</button>                                     
                                     </div>  
                                 </div>

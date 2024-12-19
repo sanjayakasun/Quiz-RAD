@@ -46,30 +46,32 @@
 
                 <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
-                        <a class="nav-link" href="student-quizzes.jsp">Quizzes</a>
+                        <a class="nav-link" aria-current="page" href="index.jsp">Home</a>
+                        <a class="nav-link active" href="student-quizzes.jsp">Quizzes</a>
                         <a class="nav-link" href="student-educators.jsp">Educators</a> 
+                         <a class="nav-link" aria-current="page" href="leaderboard.jsp">Leaderboard</a>
                         <a class="nav-link" href="student-settings.jsp">Settings</a>        
                         <%
-                            if (session.getAttribute("teacher_id") != null) {
-                        %>
-                        <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
-                        <%
+                            if(session.getAttribute("teacher_id") != null){
+                            %>
+                                <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
+                            <%
                             }
                         %>
                     </div>
 
                     <div class="d-flex ms-auto order-5">
                         <%
-                            if (session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null) {
-                        %>
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.jsp'">Login</button>
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
-                        <%
-                        } else {
-                        %>
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'process-logout.jsp'">Logout</button>
-                        <%
+                            if(session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null){
+                            %>
+                                <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.jsp'">Login</button>
+                                <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
+                            <%
+                            }
+                            else{
+                            %>
+                                <button type="button" class="btn btn-primary me-3" onclick="location.href = 'process-logout.jsp'">Logout</button>
+                            <%
                             }
                         %>                                           
                     </div>
@@ -136,8 +138,7 @@
                                                                         <button class="btn btn-primary mt-2" onclick="location.href = 'student-view-quiz.jsp?quiz_id=<%= rs2.getString("quiz_id") %>'">View Last Attempt</button>
                                                                         <%
                                                                     }
-                                                                %>                                                          
-                                                                <button class="btn btn-primary mt-2">Leaderboard</button>
+                                                                %>                                                                   
                                                                 <button class="btn btn-primary mt-2" onclick="location.href = 'student-quiz.jsp?quiz_id=<%= rs2.getString("quiz_id") %>'">Attempt</button>
                                                             </div>  
                                                         </div>
@@ -151,44 +152,7 @@
                             </div>
                         <%
                         }
-                    %>
-                    
-                    <%--
-                        while(rs.next()){
-                            %>
-                            <div class="row mt-5">
-                                <div class="col">
-                                    <div class="container mb-3">
-                                        <div class="cards">
-                                            <div class="row">
-                                                <div class="col text-center">
-                                                    <h5 class="h5 mt-2"><%= rs.getString("quiz_title") %></h5>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <p class="mt-2">
-                                                        <% 
-                                                            if(rs.getBoolean("is_public")){
-                                                                out.println("Public");
-                                                            }  
-                                                            else{
-                                                                out.println("Private");
-                                                            }
-                                                        %>                        
-                                                    </p>
-                                                </div>
-                                                <div class="col text-center">
-                                                    <button class="btn btn-primary mt-2" onclick="location.href = 'student-view-quiz.jsp'">View Last Attempt</button>
-                                                    <button class="btn btn-primary mt-2">Leaderboard</button>
-                                                    <button class="btn btn-primary mt-2" onclick="location.href = 'student-quiz.jsp'">Attempt</button>
-                                                </div>  
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%
-                        }
-                    --%>                                
+                    %>                                      
                 </div>
             </div>
         </main>

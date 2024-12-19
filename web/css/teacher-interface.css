@@ -13,7 +13,7 @@ and open the template in the editor.
   border-radius: 50%;
   width: 100px; /* Adjust the size as needed */
   height: 100px; /* Adjust the size as needed */
-  object-fit: cover; /* Maintain aspect ratio and cover the entire circle */
+  /*object-fit: cover; /* Maintain aspect ratio and cover the entire circle */
 }
 
 .teacher-card {

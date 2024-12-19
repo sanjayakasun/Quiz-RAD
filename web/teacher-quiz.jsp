@@ -70,7 +70,7 @@
                     
                     <div class="row ms-auto text-end">                    
                         <div class="col ms-auto text-start">
-                            <input type="checkbox" name="isPublic" id="isPublic">
+                            <input type="checkbox" name="isPublic" id="isPublic" checked>
                             <label for="isPublic" class="text-light h5">Public</label>
                         </div>
                         <div class="col ms-auto text-start">

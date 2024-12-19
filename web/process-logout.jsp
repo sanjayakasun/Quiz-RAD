@@ -9,13 +9,13 @@
 <%
     if(session.getAttribute("teacher_id") != null){
         session.invalidate();
-        response.sendRedirect("teacher-login.jsp");
+        response.sendRedirect("index.jsp");
     }
     else if(session.getAttribute("student_id") != null){
         session.invalidate();
-        response.sendRedirect("student-login.jsp");
+        response.sendRedirect("index.jsp");
     }
     else{
-        response.sendRedirect("student-login.jsp");
+        response.sendRedirect("index.jsp");
     }
 %>

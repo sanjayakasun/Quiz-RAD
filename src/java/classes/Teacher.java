@@ -12,13 +12,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Teacher {
-    private String teacher_id;
     private String first_name;
     private String last_name;
     private String email;
     private String username;
     private String password;
-    private String profile_pic;
     private String education;
     private String school;
 
@@ -32,51 +30,25 @@ public class Teacher {
         this.school = school;
     }
     
-    public Teacher(String first_name, String last_name, String email, String username, String password, String profile_pic, String education, String school){
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.email = email;
-        this.username = username;
-        this.password = MD5.getMd5(password);
-        this.profile_pic = profile_pic;
-        this.education = education;
-        this.school = school;
-    }
-    
     public Teacher(){}
     
-    public boolean addTeacher(boolean profilePic){
+    public boolean addTeacher(){
         boolean status = false;
         
         try {
             Connection con = DBConnector.getConnection();
-            
-            if(profilePic){
-                String query = "INSERT INTO teacher(first_name, last_name, email, username, password, profile_pic, education, school) VALUES(?,?,?,?,?,?,?,?)";
-                PreparedStatement pstmt = con.prepareStatement(query);
-                /*pstmt.setString(1, this.first_name);
-                pstmt.setString(2, this.last_name);
-                pstmt.setString(3, this.email);
-                pstmt.setString(4, this.username);
-                pstmt.setString(5, this.password);
-                pstmt.setString(6, this.education);
-                pstmt.setString(7, this.school);*/
-                int a = pstmt.executeUpdate();
-                status = a > 0;
-            }
-            else{
-                String query = "INSERT INTO teacher(first_name, last_name, email, username, password, education,school) VALUES(?,?,?,?,?,?,?)";
-                PreparedStatement pstmt = con.prepareStatement(query);
-                pstmt.setString(1, this.first_name);
-                pstmt.setString(2, this.last_name);
-                pstmt.setString(3, this.email);
-                pstmt.setString(4, this.username);
-                pstmt.setString(5, this.password);
-                pstmt.setString(6, this.education);
-                pstmt.setString(7, this.school);
-                int a = pstmt.executeUpdate();
-                status = a > 0;
-            }
+
+            String query = "INSERT INTO teacher(first_name, last_name, email, username, password, education,school) VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, this.first_name);
+            pstmt.setString(2, this.last_name);
+            pstmt.setString(3, this.email);
+            pstmt.setString(4, this.username);
+            pstmt.setString(5, this.password);
+            pstmt.setString(6, this.education);
+            pstmt.setString(7, this.school);
+            int a = pstmt.executeUpdate();
+            status = a > 0;
             
         } catch (Exception ex) {
             Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);

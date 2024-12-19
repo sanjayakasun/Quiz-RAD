@@ -15,7 +15,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Account Settings</title>
+        
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" href="./assets/img/favicon.jpeg">
+        
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -32,30 +35,32 @@
 
                 <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="index.jsp">Home</a>
+                        <a class="nav-link" aria-current="page" href="index.jsp">Home</a>
                         <a class="nav-link" href="student-quizzes.jsp">Quizzes</a>
                         <a class="nav-link" href="student-educators.jsp">Educators</a> 
-                        <a class="nav-link" href="student-settings.jsp">Settings</a>        
+                         <a class="nav-link" aria-current="page" href="leaderboard.jsp">Leaderboard</a>
+                        <a class="nav-link active" href="student-settings.jsp">Settings</a>        
                         <%
-                            if (session.getAttribute("teacher_id") != null) {
-                        %>
-                        <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
-                        <%
+                            if(session.getAttribute("teacher_id") != null){
+                            %>
+                                <p class="h5 ms-auto"><a class="nav-link" href="teacher-index.jsp">Teacher - Home</a></p>
+                            <%
                             }
                         %>
                     </div>
 
-                    <div class=" justify-content-end">
+                    <div class="d-flex ms-auto order-5">
                         <%
-                            if (session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null) {
-                        %>
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.jsp'">Login</button>
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
-                        <%
-                        } else {
-                        %>
-                        <button type="button" class="btn btn-primary me-3" onclick="location.href = 'process-logout.jsp'">Logout</button>
-                        <%
+                            if(session.getAttribute("teacher_id") == null && session.getAttribute("student_id") == null){
+                            %>
+                                <button type="button" class="btn btn-primary me-3" onclick="location.href = 'student-login.jsp'">Login</button>
+                                <button type="button" class="btn btn-primary me-3" onclick="location.href = 'teacher-login.jsp'">For Educators</button>
+                            <%
+                            }
+                            else{
+                            %>
+                                <button type="button" class="btn btn-primary me-3" onclick="location.href = 'process-logout.jsp'">Logout</button>
+                            <%
                             }
                         %>                                           
                     </div>
@@ -97,7 +102,7 @@
 
 
 
-        <%            String query = "SELECT * FROM student WHERE student_id = '1'";
+        <%  String query = "SELECT * FROM student WHERE student_id = " + session.getAttribute("student_id");
             Connection con = DBConnector.getConnection();
             PreparedStatement pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();

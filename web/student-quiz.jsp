@@ -92,6 +92,12 @@
                 location.href = "student-quizzes.jsp";
             }
         </script>
-
+        
+        <footer class="bg-light text-center">
+            <div class="text-center p-3" style="position: relative; background-color: rgba(0, 0, 0, 0.2)">
+                © 2023 All rights reserved:
+                <a class="text-dark" href="index.jsp">WeQuiz</a>
+            </div>
+        </footer>
     </body>
 </html
